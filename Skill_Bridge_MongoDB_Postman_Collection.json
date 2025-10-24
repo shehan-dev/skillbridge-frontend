@@ -1,0 +1,1126 @@
+{
+	"info": {
+		"_postman_id": "skill-bridge-mongodb-collection",
+		"name": "Skill Bridge - MongoDB Local Testing",
+		"description": "Complete API collection for Skill Bridge microservices with MongoDB integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Service (Port 3000)",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "User Signup",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"name\": \"Test User\",\n  \"role\": \"Mentee\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/auth/signup",
+									"host": ["{{base_url}}"],
+									"path": ["users", "auth", "signup"]
+								}
+							}
+						},
+						{
+							"name": "User Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/auth/login",
+									"host": ["{{base_url}}"],
+									"path": ["users", "auth", "login"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "User Management",
+					"item": [
+						{
+							"name": "Get All Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": ["{{base_url}}"],
+									"path": ["users"]
+								}
+							}
+						},
+						{
+							"name": "Get User by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/users/{{user_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["users", "{{user_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Update Profile",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Updated Name\",\n  \"bio\": \"Updated bio\",\n  \"primaryDomain\": \"Software Development\",\n  \"skills\": [\"JavaScript\", \"TypeScript\", \"Node.js\"]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/profile",
+									"host": ["{{base_url}}"],
+									"path": ["users", "profile"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Mentor Features",
+					"item": [
+						{
+							"name": "Get Mentors",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/users/mentors",
+									"host": ["{{base_url}}"],
+									"path": ["users", "mentors"]
+								}
+							}
+						},
+						{
+							"name": "Get Advanced Mentors",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/users/mentors/advanced?domain=Software Development&badge=Expert",
+									"host": ["{{base_url}}"],
+									"path": ["users", "mentors", "advanced"],
+									"query": [
+										{
+											"key": "domain",
+											"value": "Software Development"
+										},
+										{
+											"key": "badge",
+											"value": "Expert"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Mentor Availability",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/users/mentors/{{mentor_id}}/availability",
+									"host": ["{{base_url}}"],
+									"path": ["users", "mentors", "{{mentor_id}}", "availability"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Mentee Features",
+					"item": [
+				{
+					"name": "Get All Mentees",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/users/mentees",
+							"host": ["{{base_url}}"],
+							"path": ["users", "mentees"]
+						}
+					}
+				},
+				{
+					"name": "Get Mentor Earnings",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/users/mentors/{{mentorId}}/earnings",
+							"host": ["{{base_url}}"],
+							"path": ["users", "mentors", "{{mentorId}}", "earnings"],
+							"variable": [
+								{
+									"key": "mentorId",
+									"value": "7e7c4370-c164-41ba-b51d-2a90eb5b35b0"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get My Earnings (Authenticated)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/users/earnings/me",
+							"host": ["{{base_url}}"],
+							"path": ["users", "earnings", "me"]
+						},
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						]
+					}
+				},
+						{
+							"name": "Get Mentees with Filters",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/users/mentees/filters?domain=Software Development&skill=JavaScript&seniority=Junior&experience=2",
+									"host": ["{{base_url}}"],
+									"path": ["users", "mentees", "filters"],
+									"query": [
+										{
+											"key": "domain",
+											"value": "Software Development"
+										},
+										{
+											"key": "skill",
+											"value": "JavaScript"
+										},
+										{
+											"key": "seniority",
+											"value": "Junior"
+										},
+										{
+											"key": "experience",
+											"value": "2"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Mentees by Mentor",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/users/mentors/{{mentor_id}}/mentees",
+									"host": ["{{base_url}}"],
+									"path": ["users", "mentors", "{{mentor_id}}", "mentees"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Booking Service (Port 4000)",
+			"item": [
+				{
+					"name": "Booking Management",
+					"item": [
+						{
+							"name": "Get All Bookings",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/bookings",
+									"host": ["{{base_url}}"],
+									"path": ["bookings"]
+								}
+							}
+						},
+						{
+							"name": "Create Booking",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"mentorId\": \"{{mentor_id}}\",\n  \"slotStart\": \"2024-01-15T10:00:00Z\",\n  \"slotEnd\": \"2024-01-15T11:00:00Z\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/bookings/bookings",
+									"host": ["{{base_url}}"],
+									"path": ["bookings", "bookings"]
+								}
+							}
+						},
+						{
+							"name": "Get My Bookings",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/bookings/bookings/me",
+									"host": ["{{base_url}}"],
+									"path": ["bookings", "bookings", "me"]
+								}
+							}
+						},
+						{
+							"name": "Get Mentor Bookings",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/bookings/bookings/mentor/me",
+									"host": ["{{base_url}}"],
+									"path": ["bookings", "bookings", "mentor", "me"]
+								}
+							}
+						},
+						{
+							"name": "Accept Booking",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/bookings/bookings/{{booking_id}}/accept",
+									"host": ["{{base_url}}"],
+									"path": ["bookings", "bookings", "{{booking_id}}", "accept"]
+								}
+							}
+						},
+						{
+							"name": "Decline Booking",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"reason\": \"Not available at that time\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/bookings/bookings/{{booking_id}}/decline",
+									"host": ["{{base_url}}"],
+									"path": ["bookings", "bookings", "{{booking_id}}", "decline"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Availability Management",
+					"item": [
+						{
+							"name": "Create Availability Slot",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"slotStart\": \"2024-01-15T09:00:00Z\",\n  \"slotEnd\": \"2024-01-15T17:00:00Z\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/bookings/availability",
+									"host": ["{{base_url}}"],
+									"path": ["bookings", "availability"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Payment Service (Port 7000)",
+			"item": [
+				{
+					"name": "Payment Management",
+					"item": [
+						{
+							"name": "Create Checkout Session",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amount\": 50.00,\n  \"currency\": \"usd\",\n  \"bookingId\": \"{{booking_id}}\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/payments/checkout",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "checkout"]
+								}
+							}
+						},
+						{
+							"name": "Get Payment by ID",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/payments/{{payment_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "{{payment_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Get My Payments",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/payments/me",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "me"]
+								}
+							}
+						},
+						{
+							"name": "Get Payments for Booking",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/payments/booking/{{booking_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "booking", "{{booking_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Stripe Webhook",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"payment_intent.succeeded\",\n  \"data\": {\n    \"object\": {\n      \"id\": \"pi_test_123\",\n      \"amount\": 5000,\n      \"currency\": \"usd\"\n    }\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/payments/webhook",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "webhook"]
+								}
+							}
+						},
+						{
+							"name": "Get Mentor Payments",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/payments/mentor/{{mentorId}}",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "mentor", "{{mentorId}}"],
+									"variable": [
+										{
+											"key": "mentorId",
+											"value": "7e7c4370-c164-41ba-b51d-2a90eb5b35b0"
+										}
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Code Review Service (Port 6001)",
+			"item": [
+				{
+					"name": "Code Review Management",
+					"item": [
+						{
+							"name": "Create Code Review",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"mentorId\": \"{{mentor_id}}\",\n  \"title\": \"Review my React component\",\n  \"description\": \"Please review this React component for best practices\",\n  \"codeFiles\": [\n    {\n      \"fileName\": \"App.js\",\n      \"s3Key\": \"code-reviews/123/App.js\"\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/reviews/reviews",
+									"host": ["{{base_url}}"],
+									"path": ["reviews", "reviews"]
+								}
+							}
+						},
+						{
+							"name": "Get Code Review by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/reviews/reviews/{{review_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["reviews", "reviews", "{{review_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Get My Code Reviews",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/reviews/reviews",
+									"host": ["{{base_url}}"],
+									"path": ["reviews", "reviews"]
+								}
+							}
+						},
+						{
+							"name": "Get Mentor Code Reviews",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/reviews/reviews/mentor/me",
+									"host": ["{{base_url}}"],
+									"path": ["reviews", "reviews", "mentor", "me"]
+								}
+							}
+						},
+						{
+							"name": "Add Review Feedback",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"comment\": \"Great code! Consider using const instead of let for variables that don't change.\",\n  \"line\": 15,\n  \"filePath\": \"src/components/App.js\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/reviews/reviews/{{review_id}}/feedback",
+									"host": ["{{base_url}}"],
+									"path": ["reviews", "reviews", "{{review_id}}", "feedback"]
+								}
+							}
+						},
+						{
+							"name": "Update Review Status",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"status\": \"completed\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/reviews/reviews/{{review_id}}/status",
+									"host": ["{{base_url}}"],
+									"path": ["reviews", "reviews", "{{review_id}}", "status"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Notification Service (Port 9000)",
+			"item": [
+				{
+					"name": "Notification Management",
+					"item": [
+						{
+							"name": "Get User Notifications",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/notifications/notifications?limit=50",
+									"host": ["{{base_url}}"],
+									"path": ["notifications", "notifications"],
+									"query": [
+										{
+											"key": "limit",
+											"value": "50"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Mark Notification as Read",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/notifications/notifications/{{notification_id}}/read",
+									"host": ["{{base_url}}"],
+									"path": ["notifications", "notifications", "{{notification_id}}", "read"]
+								}
+							}
+						},
+						{
+							"name": "Mark All Notifications as Read",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/notifications/notifications/read-all",
+									"host": ["{{base_url}}"],
+									"path": ["notifications", "notifications", "read-all"]
+								}
+							}
+						},
+						{
+							"name": "Get User Preferences",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/notifications/preferences",
+									"host": ["{{base_url}}"],
+									"path": ["notifications", "preferences"]
+								}
+							}
+						},
+						{
+							"name": "Update User Preferences",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"emailNotifications\": true,\n  \"pushNotifications\": true,\n  \"smsNotifications\": false,\n  \"preferences\": {\n    \"booking\": true,\n    \"payment\": true,\n    \"codeReview\": true,\n    \"message\": true,\n    \"system\": false\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/notifications/preferences",
+									"host": ["{{base_url}}"],
+									"path": ["notifications", "preferences"]
+								}
+							}
+						},
+						{
+							"name": "Send Test Notification",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Test Notification\",\n  \"message\": \"This is a test notification\",\n  \"type\": \"SYSTEM\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/notifications/test",
+									"host": ["{{base_url}}"],
+									"path": ["notifications", "test"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "WebRTC Service (Port 8000)",
+			"item": [
+				{
+					"name": "Session Management",
+					"item": [
+						{
+							"name": "Create Session",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"mentorId\": \"{{mentor_id}}\",\n  \"menteeId\": \"{{mentee_id}}\",\n  \"bookingId\": \"{{booking_id}}\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sessions",
+									"host": ["{{base_url}}"],
+									"path": ["sessions"]
+								}
+							}
+						},
+						{
+							"name": "Get Session by ID",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{base_url}}/sessions/{{session_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "{{session_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Get User Sessions",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sessions/user/me",
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "user", "me"]
+								}
+							}
+						},
+						{
+							"name": "Start Session",
+							"request": {
+								"method": "PUT",
+								"url": {
+									"raw": "{{base_url}}/sessions/{{session_id}}/start",
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "{{session_id}}", "start"]
+								}
+							}
+						},
+						{
+							"name": "End Session",
+							"request": {
+								"method": "PUT",
+								"url": {
+									"raw": "{{base_url}}/sessions/{{session_id}}/end",
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "{{session_id}}", "end"]
+								}
+							}
+						},
+						{
+							"name": "Start Recording",
+							"request": {
+								"method": "POST",
+								"url": {
+									"raw": "{{base_url}}/sessions/{{session_id}}/recording/start",
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "{{session_id}}", "recording", "start"]
+								}
+							}
+						},
+						{
+							"name": "Stop Recording",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"recordingUrl\": \"https://example.com/recording.mp4\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sessions/{{session_id}}/recording/stop",
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "{{session_id}}", "recording", "stop"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Messaging Service (Port 5000)",
+			"item": [
+				{
+					"name": "Messaging",
+					"item": [
+						{
+							"name": "Send Message",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"toUserId\": \"{{recipient_id}}\",\n  \"text\": \"Hello! How are you doing?\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/messages",
+									"host": ["{{base_url}}"],
+									"path": ["messages"]
+								}
+							}
+						},
+						{
+							"name": "Get Conversation Messages",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/conversations/{{conversation_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["conversations", "{{conversation_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Get User Conversations",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/conversations",
+									"host": ["{{base_url}}"],
+									"path": ["conversations"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Health Checks",
+			"item": [
+				{
+					"name": "User Service Health",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/users/health",
+							"host": ["{{base_url}}"],
+							"path": ["users", "health"]
+						}
+					}
+				},
+				{
+					"name": "Booking Service Health",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/bookings/health",
+							"host": ["{{base_url}}"],
+							"path": ["bookings", "health"]
+						}
+					}
+				},
+				{
+					"name": "Payment Service Health",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/payments/health",
+							"host": ["{{base_url}}"],
+							"path": ["payments", "health"]
+						}
+					}
+				},
+				{
+					"name": "Code Review Service Health",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/reviews/health",
+							"host": ["{{base_url}}"],
+							"path": ["reviews", "health"]
+						}
+					}
+				},
+				{
+					"name": "Notification Service Health",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/notifications/health",
+							"host": ["{{base_url}}"],
+							"path": ["notifications", "health"]
+						}
+					}
+				},
+				{
+					"name": "WebRTC Service Health",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/sessions/health",
+							"host": ["{{base_url}}"],
+							"path": ["sessions", "health"]
+						}
+					}
+				},
+				{
+					"name": "Messaging Service Health",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/messages/health",
+							"host": ["{{base_url}}"],
+							"path": ["messages", "health"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "mentor_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "booking_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "payment_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "review_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "session_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "notification_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "conversation_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "recipient_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

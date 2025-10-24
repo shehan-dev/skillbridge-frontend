@@ -192,7 +192,7 @@ export default function Bookings() {
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-lg font-semibold text-gray-900">
-                        {isMentor ? (booking.mentee?.name || 'Mentee') : (booking.mentorName || 'Mentor')}
+                        {isMentor ? (booking.mentee?.name || 'Mentee') : 'Mentor'}
                       </h3>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.status)}`}>
                         {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
