@@ -3,8 +3,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 type User = {
   userId: string;
-  role: string;
-  email?: string;
+  email: string;
+  name: string;
+  isMentor: boolean;
+  isActive: boolean;
+  skills: string[];
+  badges: string[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 type AuthContextType = {
